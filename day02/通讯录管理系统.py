@@ -2,7 +2,7 @@
 # @Author: Fallen
 # @Date:   2020-04-03 20:13:47
 # @Last Modified by:   Fallen
-# @Last Modified time: 2020-04-04 00:40:13
+# @Last Modified time: 2020-04-04 01:22:26
 
 '''
 通讯录管理系统：
@@ -20,7 +20,7 @@ def collect_name_and_phone_number():
     name = []
     phone_number = []
     while True:
-        temp_name = input("输入名字(输入'q'退出)：")
+        temp_name = input("输入名字(长度不超过20位，超过20位，就只保留20位)(输入'q'退出)：")
         
         if temp_name.lower()=="q":
             return dic
@@ -35,6 +35,8 @@ def collect_name_and_phone_number():
             continue
         else:
             temp_phone = input("输入手机号码:")
+            temp_phone = temp_phone[0:13]
+            temp_name = temp_name[0:20]
             name.append(temp_name)
             phone_number.append(temp_phone)
             dic[temp_name]=temp_phone
@@ -67,7 +69,10 @@ def list_all_users(address_book):
 
 
 def main():
+    global address_book
+    address_book={}
     while True:
+        
         judge = input('''
             请输入您想进行的操作：
             1.增加姓名和手机
@@ -76,56 +81,88 @@ def main():
             4.查询所有用户 
             5.根据姓名查找手机
             6.退出
-            :
-        ''')
-        if int(judge)==1:
-           global address_book
-           address_book = collect_name_and_phone_number() 
-           judge1 = input("回到上一层吗？(yes/no):")
-           if judge1.lower()=='yes':
-               continue
-           else:
-                print("谢谢使用！")
-                break
-        elif int(judge)==2:
-            name2delete = input("请输入要删除的姓名：")
-            delete(name2delete,address_book)
-            judge2 = input("回到上一层吗？(yes/no):")
-            if judge2.lower()=='yes':
-               continue
-            else:
-                print("谢谢使用！")
-                break
-        elif int(judge)==3:
-            name2fix = input("请输入要修改手机人的姓名：")
-            phone2fix = input("请输入修改后的手机号码：")
-            fix_phone(name2fix,phone2fix,address_book)
-            judge3 = input("回到上一层吗？(yes/no):")
-            if judge3.lower()=='yes':
-               continue
-            else:
-                print("谢谢使用！")
-                break
-        elif int(judge)==4:
-            list_all_users(address_book)
-            judge4 = input("回到上一层吗？(yes/no):")
-            if judge4.lower()=='yes':
-               continue
-            else:
-                print("谢谢使用！")
-                break
-        elif int(judge)==5:
-            name2search = input("请输入要查找人的姓名：")
-            search(name2search,address_book)
-            judge5 = input("回到上一层吗？(yes/no):")
-            if judge.lower()=='yes':
-               continue
-            else:
-                print("谢谢使用！")
-                break
-        elif int(judge)==6:
-            break
+            请输入相应数字代号行驶功能！
+            想要有完整体验，请先运行1。
+        :''')
+        if judge.isdigit() and int(judge) in (1,2,3,4,5,6):
 
+            if int(judge)==1:
+                
+                address_book = collect_name_and_phone_number() 
+                judge1 = input("回到上一层吗？(yes/no):")
+                if judge1.lower()=='yes':
+                    continue
+                elif judge1.lower()=="no":
+                    print("谢谢使用！")
+                    break
+                else:
+                    judge1=input("请输入 yes 或 no。若不输入yes或no，系统将自动退回主界面:")
+                    continue
+            elif int(judge)==2:
+                name2delete = input("请输入要删除的姓名：")
+                if name2delete in address_book:
+                    delete(name2delete,address_book)
+                    judge2 = input("回到上一层吗？(yes/no):")
+                    if judge2.lower()=='yes':
+                        continue
+                    else:
+                        print("谢谢使用！")
+                        break
+                else:
+                    judge22 = input("没有这个姓名！回到上一层吗？(yes/no):")
+                    if judge22.lower()=='yes':
+                        continue
+                    else:
+                        print("谢谢使用！")
+                        break
+            elif int(judge)==3:
+                name2fix = input("请输入要修改手机人的姓名：")
+                if name2fix in address_book:
+                    phone2fix = input("请输入修改后的手机号码：")
+                    fix_phone(name2fix,phone2fix,address_book)
+                    judge3 = input("回到上一层吗？(yes/no):")
+                    if judge3.lower()=='yes':
+                        continue
+                    else:
+                        print("谢谢使用！")
+                        break
+                else:
+                    judge33 = input("没有这个姓名！回到上一层吗？(yes/no):")
+                    if judge33.lower()=='yes':
+                        continue
+                    else:
+                        print("谢谢使用！")
+                        break
+            elif int(judge)==4:
+                list_all_users(address_book)
+                judge4 = input("回到上一层吗？(yes/no):")
+                if judge4.lower()=='yes':
+                    continue
+                else:
+                    print("谢谢使用！")
+                    break
+            elif int(judge)==5:
+                name2search = input("请输入要查找人的姓名：")
+                if name2search in address_book:
+                    search(name2search,address_book)
+                    judge5 = input("回到上一层吗？(yes/no):")
+                    if judge.lower()=='yes':
+                        continue
+                    else:
+                        print("谢谢使用！")
+                        break
+                else:
+                    judge55 = input("没有这个姓名！回到上一层吗？(yes/no):")
+                    if judge55.lower()=='yes':
+                        continue
+                    else:
+                        print("谢谢使用！")
+                        break
+            elif int(judge)==6:
+                break
+        else:
+            print("必须输入数字0-6！")
+            continue
 
 if __name__ == "__main__":
     main()
