@@ -2,7 +2,7 @@
 # @Author: Fallen
 # @Date:   2020-04-03 20:13:47
 # @Last Modified by:   Fallen
-# @Last Modified time: 2020-04-04 01:22:26
+# @Last Modified time: 2020-04-04 01:30:51
 
 '''
 通讯录管理系统：
@@ -14,9 +14,10 @@
 6.推出
 '''
 
-def collect_name_and_phone_number():
+def collect_name_and_phone_number(address_book):
     #添加姓名和手机信息，并记录
-    dic = {}
+
+    dic = address_book
     name = []
     phone_number = []
     while True:
@@ -88,7 +89,7 @@ def main():
 
             if int(judge)==1:
                 
-                address_book = collect_name_and_phone_number() 
+                address_book = collect_name_and_phone_number(address_book) 
                 judge1 = input("回到上一层吗？(yes/no):")
                 if judge1.lower()=='yes':
                     continue
@@ -146,7 +147,7 @@ def main():
                 if name2search in address_book:
                     search(name2search,address_book)
                     judge5 = input("回到上一层吗？(yes/no):")
-                    if judge.lower()=='yes':
+                    if judge5.lower()=='yes':
                         continue
                     else:
                         print("谢谢使用！")
