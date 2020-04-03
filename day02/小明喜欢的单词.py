@@ -2,7 +2,7 @@
 # @Author: Fallen
 # @Date:   2020-04-03 19:09:03
 # @Last Modified by:   Fallen
-# @Last Modified time: 2020-04-03 19:47:18
+# @Last Modified time: 2020-04-03 21:43:08
 
 '''
 小易喜欢的单词具有以下特性：
@@ -27,9 +27,6 @@ def func():
             break
     else:
         print("小明喜欢。")
-
-
-    
     
 
 def main():
