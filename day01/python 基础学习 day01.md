@@ -278,6 +278,49 @@ while True:
 	...
     
 #break , continue  分别是结束所有循环，结束当前循环开始下一循环
+
+#这里有个组合
+while []:
+    ...
+else:
+    
+#还有
+for i in range():
+    ...
+else:
+    
+#else 语句也可以与循环语句尽心搭配，其实else语句是个相对独立的语句
+#举个栗子
+'''
+小易喜欢的单词具有以下特性：
+1.单词每个字母都是大写字母
+2.单词没有连续相等的字母
+
+例如：
+小易不喜欢"ABBA"，因为这里有两个连续的'B'
+小易喜欢"A","ABA"和"ABCBA"这些单词
+给你一个单词，你要回答小易是否会喜欢这个单词。
+
+'''
+def func():
+    #现有个单词
+    word = input("请输入一个单词：")
+    for i in range(len(word)):
+        if not word.isupper():
+            print("小明不喜欢。没大写~")
+            break
+        elif i<(len(word)-1)  and word[i]==word[i+1]:
+            print("小明不喜欢。叠词~")
+            break
+    else:
+        print("小明喜欢。")
+ 
+def main():
+    func()
+
+
+if __name__ == "__main__":
+    main()
 ```
 
 ## 14.列表
@@ -319,6 +362,7 @@ sum(list1)
 ## 增
 list.append() #将元素增至列表末尾
 list.insert(index,obj) #将元素插入到指定 index位置
+list.extend(list2) #列表的尾部延申，类似于 list=list+list2
 
 ##删
 list.pop(index) #删除指定index的元素，如果不指定index，默认最后一个元素
