@@ -2,7 +2,7 @@
 # @Author: Fallen
 # @Date:   2020-04-03 20:13:47
 # @Last Modified by:   Fallen
-# @Last Modified time: 2020-04-04 01:30:51
+# @Last Modified time: 2020-04-04 01:33:28
 
 '''
 通讯录管理系统：
@@ -97,7 +97,7 @@ def main():
                     print("谢谢使用！")
                     break
                 else:
-                    judge1=input("请输入 yes 或 no。若不输入yes或no，系统将自动退回主界面:")
+                    judge1=input("输入非yes或no，系统将自动退回主界面。")
                     continue
             elif int(judge)==2:
                 name2delete = input("请输入要删除的姓名：")

@@ -2,7 +2,7 @@
 # @Author: Fallen
 # @Date:   2020-04-03 19:52:43
 # @Last Modified by:   Fallen
-# @Last Modified time: 2020-04-03 19:52:46
+# @Last Modified time: 2020-04-04 10:45:43
 '''
 @Author: Fallen
 @Date: 2020-04-03 10:30:20
@@ -42,7 +42,7 @@ g = l.replace("a","##") # 用后边的东西替换前边的东西
 print(g)
 
 #3.编码与解码
-# encode()  decode()
+# encode()  decode() 汉字-encode--》字节    字节--decode--》汉字
 # 有  gbk 中文   gb2312 简体中文  unicode  utf-8  什么的
 l2 = "我爱你中国！莫哈哈哈！"
 h = l2.encode("utf-8")

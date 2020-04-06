@@ -167,6 +167,8 @@ print(a == list2)
 元组（tuple)的操作，跟列表基本一样。包括，元素访问，链接，重复，切片，in/not in, 长度（len()），最值（max(),min()）。
 
 ```python
+#定义元组的时候，不能括号里只放一个元素，识别不了，如果只有一个元素，就得加个"," 
+t1 = ("hello",)
 #查找（列表也可）
 t1 = (10,20,30,10)
 print(t1.index(20))  #查找值等于20的第一个元素
@@ -174,15 +176,51 @@ print(t1.count(10))  #返回元组中10的个数
 
 #遍历（列表也可）
 ##同时获取下标和值
+## enumerate() 这函数，可以同时获取序列的值和索引，对于字典就是键值对
 for index,value in enumerate(t1):
     print(index, value)
+    
+### enumerate() 适用于各种数据封装格式：
+dict2 = {"jack":78,"hanmeimei":99,"lilei":60}
+t1 = (10,20,30,10)
+s1 = {10,20,30}
+l1 = [10,20,30]
+
+for i,j in enumerate(dict2):
+    print(i,j)
+
+for i,j in enumerate(t1):
+    print(i,j)
+
+for i,j in enumerate(s1):
+    print(i,j)
+
+for i,j in enumerate(l1):
+    print(i,j)
+#这个打印的就是，一堆元组，每个小元组2个值，形成(index,value)的对
+for i in enumerate(l1):  
+    print(i)
+
+##直接打印 emumerate(l1) ，会返回enumerate对象
+print(enumerate(l1))
+
 
 ##通过下标遍历（列表也可）
 for i in range(len(t1)):
     print(t1[i])
     
-
-
+##最大最小值,求和
+max(t1)
+min(t1)
+sum(t1)
+# 可以进行 + * 操作,但是这个操作，只能赋予新的变量，不能修改
+t1 = (1,2)
+t2 = (4,5)
+t3 = t1+t2
+t4 = t2 * 3
+#可以进行排序 sorted()
+t3 = (4,5,1,2)
+print(sort(t3))  #这个打印出来是个列表，再次强调，不能对元组进行修改
 ```
 
 ## 3.解包
@@ -243,8 +281,8 @@ print(dict1["hanmeimei"])
 
 #print(dict1["tom"]) #KeyError: 'tom'
 
-#字典名.get()
-result = dict1.get("lilei",'1')  # 如果没有lilei这个键，返回默认值1，不会报错
+#字典名.get(key)
+result = dict1.get("lilei",'1')  # 如果没有lilei这个键，返回默认值None，不会报错
 print(result)
 
 #2.添加:当指定的键不存在的时候，则表示添加
@@ -257,7 +295,14 @@ print(dict1)
 #3. 删除 pop 删除并返回指定键对应的值
 #注意：通过键，直接删除整个键值对
 dict1.pop("jack")
+#pop有返回值，返回的时删除成功的时候，对应键的值
+result = dict1.pop("jack")  
+print(result)
 print(dict1)
+#pop可以设置默认值，当想要删除的键值对不存在，可以是设置一个默认的返回值，告诉你出问题了
+dict1 = {"jack":78,"hanmeimei":99,"lilei":60}
+result = dict1.pop("hhhhhhh","不存在这样的元素")
+print(result)
 
 del dict1['lilei'] #删除键值对，不返回值
 dict1.clear()  #清空字典
@@ -273,10 +318,14 @@ print(a)
 dict2 = {"jack":78,"hanmeimei":99,"lilei":60}
 
 #方式一：只获取键
+#当你就这样简单的用一个变量去遍历字典，你遍历出来的是字典的键
 for key in dict2:
     value = dict2[key]
     print(key,value)
 
+print(dict2.keys())
+#使用 dict2.keys()方法获取的，是存放所有 键的一个  "dict_key" 对象，要想获取每一个键
+#还需要进行遍历
 #方式二：只获取值
 #values,得到的结果是一个列表，当做列表处理
 print(dict2.values())
@@ -303,6 +352,15 @@ print(len(dict1))
 #7.成员操作
 d2 = {'name':'麻辣龙虾','taste':'美味'}
 print('name' in d2) #判断某个键是否在列表中
+
+#8.其他内置函数
+#update()  类似于列表中的 “+”，但是加完了还能去重，字典本身不支持符号运算
+dict1.update(dict2) 
+
+#fromkeys() 就是指定key来生成或转换为新字典的方法，如果指定了默认值，那就把它赋予每一个value
+#注意，即使你默认值传的是个列表，里边好多值，也是把整个列表当作value去赋值的，这方法可以说很难用了
+list1 = ['aa','bb','cc']
+dict3.fromkeys(list1,10)
 ```
 
 ## 5.随机数
@@ -320,4 +378,4 @@ import  random
 |         randint()         |                       返回一个随机整数                       |
 |       shuffle(seq)        |                将序列元素随机排列（打乱顺序）                |
 
-## 6.
+## 
