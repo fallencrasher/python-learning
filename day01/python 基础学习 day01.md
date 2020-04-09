@@ -138,6 +138,67 @@ message = "John 今年{}岁了，上的是{},每天有{}元零花钱。".format(
 print(message)
 
 
+##还有一个更牛逼的 f''
+name = '太白金星'
+age = 18
+sex = '男'
+msg = F'姓名：{name},性别：{age}，年龄：{sex}'  # 大写字母也可以
+msg = f'姓名：{name},性别：{age}，年龄：{sex}'  
+print(msg)
+'''
+输出结果：
+姓名：太白金星,性别：18，年龄：男
+'''
+
+#可以加任意表达式
+print(f'{3*21}')  # 63
+
+name = 'barry'
+print(f"全部大写：{name.upper()}")  # 全部大写：BARRY
+
+# 字典也可以
+teacher = {'name': '太白金星', 'age': 18}
+msg = f"The teacher is {teacher['name']}, aged {teacher['age']}"
+print(msg)  # The comedian is 太白金星, aged 18
+
+# 列表也行
+l1 = ['太白金星', 18]
+msg = f'姓名：{l1[0]},年龄：{l1[1]}.'
+print(msg)  # 姓名：太白金星,年龄：18.
+
+#可以用函数完成相应的功能，然后将返回值返回到字符串相应的位置
+def sum_a_b(a,b):
+    return a + b
+a = 1
+b = 2
+print('求和的结果为' + f'{sum_a_b(a,b)}')
+##
+
+##多行 f' '      
+name = 'barry'
+age = 18
+ajd = 'handsome'
+
+# speaker = f'''Hi {name}.
+# You are {age} years old.
+# You are a {ajd} guy!'''
+
+speaker = f'Hi {name}.'\
+          f'You are {age} years old.'\
+          f'You are a {ajd} guy!'
+print(speaker)
+
+##其他细节
+print(f"{{73}}")  # {73}
+print(f"{{{73}}}")  # {73}
+print(f"{{{{73}}}}")  # {{73}}
+m = 21
+# ! , : { } ;这些标点不能出现在{} 这里面。
+# print(f'{;12}')  # 报错
+# 所以使用lambda 表达式会出现一些问题。
+# 解决方式：可将lambda嵌套在圆括号里面解决此问题。
+x = 5
+print(f'{(lambda x: x*2) (x)}')  # 10
 ```
 
 ## 7.输入 input()

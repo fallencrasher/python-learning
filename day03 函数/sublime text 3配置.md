@@ -95,3 +95,22 @@ autofilename
 
 ```
 
+## subliimecodeintel 设置
+
+```python
+#在 Perefences-->Browes Packages里，找到sublimecodeintel的文件夹，进去，用 cmd 新建文件夹（.codeintel）,然后在这个文件夹里新建一个没有后缀名的文件（config），打开，把下边的复制进去，或者不一样的，自己看看在哪，基本就是python的安装路径和包的位置
+
+{
+	"python":{
+			"python":"C:/Program Files (x86)/Python3.8/python.exe",
+			"pythonExtraPaths":
+				[
+					"C:/Program Files (x86)/Python3.8",
+					"C:/Program Files (x86)/Python3.8/DLLs",
+					"C:/Program Files (x86)/Python3.8/Lib",
+					"C:/Program Files (x86)/Python3.8/Lib/site-packages"
+				]
+	},
+}
+```
+

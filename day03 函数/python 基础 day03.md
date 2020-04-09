@@ -104,6 +104,17 @@ print(s1 ^ s2)
 print(s1.symmetric_difference(s2))
 s1.symmetric_difference_update(s2) ##这表示求对称差集，并把对称差集赋值给s1
 
+#7.子集于超集
+set1 = {1,2,3}
+set2 = {1,2,3,4,5,6}
+
+print(set1 < set2)
+print(set1.issubset(set2))  # 这两个相同，都是说明set1是set2子集。
+
+print(set2 > set1)
+print(set2.issuperset(set1))  # 这两个相同，都是说明set2是set1超集。
+
+
 ~~~
 
 ## 二、补充
@@ -183,7 +194,7 @@ print({x for x in range(10)})
 
 ### 2.5 可变与不可变对象
 
-```
+```python
 # 不可变
 指向内存的值是不变的 int float str tutle 
 # 可变
@@ -194,13 +205,13 @@ print({x for x in range(10)})
 
 ### 2.6 判断是不是各种类型
 
-```
+```python
 # isinstance()
 isinstance(2,int)
 isinstance(a_list,list)
 isinstance(a_tuple,tuple)
 isinstance(a_set,set)
-isinstance(a_dict,dictinary)
+isinstance(a_dict,dict)
 
 ```
 
@@ -281,6 +292,7 @@ def 函数名（[参数1],[参数2]....[参数n]）:
   - 如果传了实参，那么实参优先，不会使用默认值
   - 默认值只计算一次
   - 默认值必须是不可变对象
+  - 如果默认参数指向的是一个可变数据类型，那你无论调用多少次默认参数，都是同一个对象，除非你给它传个参数,你给他穿个参数，也只是你这一次调用不一样了，原来的还在，如果你继续默认调用，就还是他
 
   ~~~python
   def my_power(x,n=2):
@@ -294,6 +306,16 @@ def 函数名（[参数1],[参数2]....[参数n]）:
   test([1,2,3])
   test()   #['end']
   test()   #['end','end']
+  #默认值参数指向一个可变类型
+  def func(a,list=[]):
+      list.append(a)
+      return list
+  ret1 = func(10,) # ret1 = [10,]
+  ret2 = func(20,[]) # ret2 = [20,]
+  ret3 = func(100,) # ret3 = [10,100]
+  print(func(10,)) #[10,100]
+  print(func(20,[])) #[20]
+  print(func(100,))#[10,100]
   ~~~
 
 - 可变参数，传入的参数个数是可变的，可以是1个、2个到任意个，还可以是0个。
@@ -316,6 +338,9 @@ def 函数名（[参数1],[参数2]....[参数n]）:
   demo1(1,name='kk',age=3)
   b = {'a':20,'b':12,'c':32}
   demo(**b)
+  
+  ## 定义函数参数时，用*args 和 **keargs 就是在装包
+  # 调用函数时，传输入参数，用 *args 和 **kwargs 就是在解包
   ~~~
 
 
@@ -428,10 +453,121 @@ def test():
     pass # 占位符
 ~~~
 
+
+
+### 8 全局变量与局部变量
+
+- 如果你在定义变量之前引用变量，会报错，变量必须先定义，后引用
+
+```python
+# global 
+# 当全局变量是不可变类型的时候，我们还想要在函数里对他进行修改，就得在函数里进行global声明
+# 当全局变量是可变类型的时候，我们即使不在函数里进行global声明，也可以在函数里对它进行修改
+# 一般golbal 声明都要在函数一开始的时候，global 也可以直接在函数里新声明一个变量
+a = "外部定义的变量"
+list1 = ['外部定义的变量']
+def func():
+    print(a)
+    print(list1)
+def func1():
+    global a 
+    #我们在函数里声明将要修改全局变量，那我们在函数内的修改不需要返回值就可以改变外部变量
+    a = a + "hhhhh"
+    list1.append(a)
+    print(a)
+    print(list1)
+
+def func2():
+    #如果我们声明要使用全局变量，我们函数里用的各种变量都随便是什么名字，跟外边都没关系
+    a = "莫哈哈"
+    list1 = [1,2,3,4]
+    print(a)
+    print(list1)
+ 
+
+func()  # 这个打印出来的是 "外部定义的变量" ["外部定义的变量"]
+func1() # 这个打印出来的是 "外部定义的变量hhhhh" ["外部定义的变量","外部定义的变量hhhhh"]
+func2()  # 这个打印出来的是 "莫哈哈" [1,2,3,4]
+
+
+
+## 所以还是要注意，全局变量名和函数内部的变量名还是整成不一样的好。起名字是程序员最大的难点。
+
+#内部函数
+#1.内部函数可以访问外部函数的变量
+#2.内部函数可以修改外部函数可变类型的变量
+#3.内部函数在无声明情况下不可修改外部函数的不可变类型变量
+#4.这个声明 是 nonlocal,要加在内部函数里，nonlocal 不能影响全局变量。
+#5.内部函数修改全局的不可变类型变量，需要在内部函数内部声明 global
+#locals()函数返回一个字典，包含当前函数内声明的内容有什么
+#globals()函数返回一个字典，包含当前的全局变量有什么
+#调用外部函数
+
+
+m = 2020
+def func():
+	#声明变量,都是局部变量
+	n = 100
+	list1 = [1,2,3,4]
+
+	#内部函数
+	#在函数内部声明另外一个函数
+	def inner_func():
+		#声明要对全局变量m进行修改
+		global m
+		#声明要对外部函数不可变类型变量n进行修改
+		nonlocal n  
+		#对list1里面的元素进行加5操作
+		for index,i in enumerate(list1):
+			list1[index]=i+n
+
+		list1.sort()
+		n +=1
+		m += 1
+	#调用内部函数
+	inner_func()
+	print(list1)
+	print(n)
+	print(m)
+	print(locals()) #locals()函数返回一个字典，包含当前函数内声明的内容有什么
+	print(globals()) #globals()函数返回一个字典，包含当前的全局变量有什么
+#调用外部函数
+func()
+
+
+
 ```
-import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener(
-urllib.request.build_opener( urllib.request.ProxyHandler()) );
-open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen(
-'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())
+
+### 9.闭包
+
+```python
+#当函数定义内部函数，且返回值时内部函数名，就叫闭包
+#1.闭包必须是外部函数种定义了内部函数
+#2.外部函数是有返回值的，且该返回值就是内部函数名，不能加括号
+#3.内部函数引用外部函数的变量值
+'''
+闭包格式：
+
+def 外部函数()：
+	...
+	def 内部函数():
+		...
+	return 内部函数
+'''
+def func():
+	a = 100
+
+	def inner_func():
+		b = 99
+		print(a,b)
+
+	print(inner_func)
+	return inner_func
+
+
+#调用函数时，用对象接住函数返回的内部函数，那其实，这个对象x就变成了func()的内部函数，当使用 x() 是可以调用它
+x = func()
+
+x()
 ```
 
