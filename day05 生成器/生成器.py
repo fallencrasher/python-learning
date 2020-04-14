@@ -55,7 +55,7 @@ for i in range(200):
 	print(next(ret))
 
 
-#yield from
+#yield from ： 将一个可迭代对象变成一个生成器
 def func4():
 	l1 = [1,2,3,4,5]	
 	yield from l1
