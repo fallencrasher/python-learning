@@ -46,7 +46,7 @@ def register():
             if username in list(dict1.keys()):
                 print('you already have a accout!Please login.')
                 login()
-                return False
+           
             else:
                 f1.write('\n'+username+'|'+password)
                 return True
@@ -67,16 +67,22 @@ def auth(f):
 			ret = f(*args,**kwargs)
 			return ret
 		else:
-			username=input('username:')
-			password = input('password:')
-			if username=='fallen' and password == '123456':
-				print('登录成功')
-				status_dict['username']=username
-				status_dict['status']=True
+			login()
+			if login():
 				ret = f(*args,**kwargs)
 				return ret
 			else:
-				print('登录失败')
+				print('opration error,please flash the page.')
+			# username=input('username:')
+			# password = input('password:')
+			# if username=='fallen' and password == '123456':
+			# 	print('登录成功')
+			# 	status_dict['username']=username
+			# 	status_dict['status']=True
+			# 	ret = f(*args,**kwargs)
+			# 	return ret
+			# else:
+			# 	print('登录失败')
 	return inner 
 
 @auth

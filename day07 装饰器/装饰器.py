@@ -18,70 +18,70 @@
 
 #版本一：写一些代码测试 index 函数的执行效率
 #但是，如果想要测试另一个函数，就得再写一个一遍，不好
-# def index():
-# 	'''省略一堆代码''' #模拟网路延迟
-# 	time.sleep(2)
-# 	print('欢迎登陆博客园')
+def index():
+	'''省略一堆代码''' #模拟网路延迟
+	time.sleep(2)
+	print('欢迎登陆博客园')
 
-# def dairy():
-# 	time.sleep(2)
-# 	print('欢迎来到b站')
-# import time
-# #print(time.time()) #这一刻的格林威治时间
+def dairy():
+	time.sleep(2)
+	print('欢迎来到b站')
+import time
+print(time.time()) #这一刻的格林威治时间
 
-# start_time=time.time()
-# index()
-# end_time = time.time()
-# print(end_time-start_time) #这个就测出了函数执行的时间
+start_time=time.time()
+index()
+end_time = time.time()
+print(end_time-start_time) #这个就测出了函数执行的时间
 
-# start_time=time.time()
-# dairy()
-# end_time = time.time()
-# print(end_time-start_time) #这个就测出了函数执行的时间
+start_time=time.time()
+dairy()
+end_time = time.time()
+print(end_time-start_time) #这个就测出了函数执行的时间
 
 
 #版本二:利用函数解决代码重复使用问题
 #这个版本的问题：这么写，确实没改变源码，而且给 原函数增加了新功能，
 #但是我们改变了原函数的调用方式
-# def timmer(f):
-# 	start_time = time.time()
-# 	f()
-# 	end_time = time.time()
-# 	print(f'测试函数执行效率：{end_time - start_time}')
-# timmer(index)
+def timmer(f):
+	start_time = time.time()
+	f()
+	end_time = time.time()
+	print(f'测试函数执行效率：{end_time - start_time}')
+timmer(index)
 
 #版本三：不能改变原函数的调用方式
-# def timmer2(f):  # 这个函数就是装饰器了，但是不是终极形态
-# 	def inner():
-# 		start_time = time.time()
-# 		f() #index()
-# 		end_time = time.time()
-# 		print(f'测试函数执行效率：{end_time - start_time}')
-# 	return inner
+def timmer2(f):  # 这个函数就是装饰器了，但是不是终极形态
+	def inner():
+		start_time = time.time()
+		f() #index()
+		end_time = time.time()
+		print(f'测试函数执行效率：{end_time - start_time}')
+	return inner
 
-# # ret = timmer2(index) #inner
-# # ret() #inner()
+# ret = timmer2(index) #inner
+# ret() #inner()
 
-# index = timmer2(index) #inner
-# index() #inner() 这就按照原来的方式调用了原函数，而且为其增加了执行效率功能
+index = timmer2(index) #inner
+index() #inner() 这就按照原来的方式调用了原函数，而且为其增加了执行效率功能
 
 
 #版本四：装饰器，python做优化，叫做语法糖
-# import time
-# def timmer2(f): #装饰器函数一定要写在被装饰函数前边
-# 	def inner():  
-# 		start_time = time.time()
-# 		f() #index()
-# 		end_time = time.time()
-# 		print(f'测试函数执行效率：{end_time - start_time}')
-# 	return inner
+import time
+def timmer2(f): #装饰器函数一定要写在被装饰函数前边
+	def inner():  
+		start_time = time.time()
+		f() #index()
+		end_time = time.time()
+		print(f'测试函数执行效率：{end_time - start_time}')
+	return inner
 
-# @timmer2 #在被装饰函数前边，写个这个，就可为下边函数增加功能了
-# def index():
-# 	'''省略一堆代码''' #模拟网路延迟
-# 	time.sleep(0.6)
-# 	print('欢迎登陆博客园')
-# index()
+@timmer2 #在被装饰函数前边，写个这个，就可为下边函数增加功能了
+def index():
+	'''省略一堆代码''' #模拟网路延迟
+	time.sleep(0.6)
+	print('欢迎登陆博客园')
+index()
 
 def dairy(): #这个函数定义的时候没有在前边写装饰器的语法糖，所以没有附加功能
 	time.sleep(0.6)

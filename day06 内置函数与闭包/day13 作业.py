@@ -344,7 +344,7 @@ def login():
                 return True
         count += 1
 
-login()
+#login()
 
 
 # def land():
@@ -386,7 +386,7 @@ def registe():
                 f1.write('\n'+username+'|'+password)
                 return True
 
-registe()
+#registe()
 
 
 
@@ -421,32 +421,108 @@ registe()
 # 第一个功能是实现给文件增加数据，用户通过输入姓名，年龄，电话，工作，给原文件增加数据（增加的数据默认追加到原数据最后一行的下一行），但id要实现自增（id自增有些难度，id是不需要用户输入的但是必须按照顺序增加）。
 # 第二个功能是实现给原文件删除数据，用户只需输入id，则将原文件对应的这一条数据删除（删除后下面的id不变，比如此时你输入1，则将第一条数据删除，但是下面所有数据的id值不变及太白，nezha的 id不变）。
 
-def add_message():
-    with open('message.txt',encoding='utf-8',mode='r+') as f1:
-        name = input('请输入名字：')
-        age = input('请输入年龄：')
-        phone = input('请输入电话：')
-        job = input('请输入工作：')
-        for line in f1:
-            s= line
-        count = str(int(s.strip()[0]) + 1)
-        l = []
-        l.append(count)
-        l.append(name)
-        l.append(age)
-        l.append(phone)
-        l.append(job)
-        s1 ='\n' + ','.join(l)
-        f1.write(s1)
-    return
 
-import os
-def del_message():
-    order = input('请输入序号：')
-    with open ('message.txt',encoding='utf-8',mode='r')as f1,open('message.txt.bak',encoding='utf-8',mode='w')as f2:
+def add_msg():
+    global total_list
+    global _id
+    dict_temp = {}
+    while True:
+        id_temp = next(_id)
+        name = input('name:')
+        age = input('age:')
+        phone = input('phone:')
+        job = input('job:')
+        dict_temp['id']=id_temp
+        dict_temp['name']=name
+        dict_temp['age']=age
+        dict_temp['phone']=phone
+        dict_temp['job']=job
+        total_list.append(dict_temp)
+        
+def del_msg():
+    global total_list
+    while True:
+        id_to_del=input('输入要删除的员工id：')
+        for i in total_list:
+            if total_list[i]['id'] == int(id_to_del):
+                total_list.pop[i]
+        
+
+def main():
+
+    _id = (id for id in range(1,100000))
+    with open('staff_msg.txt',encoding='utf-8') as f1,open('staff_msg.txt',encoding='utf-8',mode='w') as f2:
+        total_list=[]
         for line in f1:
-            if line[0] != order.strip():
-                f2.write(line)
-    os.remove('message.txt')
-    os.rename('message.txt.bak','message.txt')
-    return
+            total_list.append(line.strip())
+        
+        while True:
+            judge = input('想添加还是删除啊?(add/del):')
+            if judge=='add':
+                add_msg()
+                judge = input('还接着操作吗？(yes/no):')
+                if judge=='yes':
+                    continue
+                else:
+                    f2.write(total_list)
+                    break
+
+            elif judge=='del':
+                del_msg()
+                judge = input('还接着操作吗?(yes/no)')
+                if judge=='yes':
+                    continue
+                else:
+                    f2.write(total_list)
+                    break
+
+
+
+
+
+
+if __name__ == '__main__':
+    main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# def add_message():
+#     with open('message.txt',encoding='utf-8',mode='r+') as f1:
+#         name = input('请输入名字：')
+#         age = input('请输入年龄：')
+#         phone = input('请输入电话：')
+#         job = input('请输入工作：')
+#         for line in f1:
+#             s= line
+#         count = str(int(s.strip()[0]) + 1)
+#         l = []
+#         l.append(count)
+#         l.append(name)
+#         l.append(age)
+#         l.append(phone)
+#         l.append(job)
+#         s1 ='\n' + ','.join(l)
+#         f1.write(s1)
+#     return
+
+# import os
+# def del_message():
+#     order = input('请输入序号：')
+#     with open ('message.txt',encoding='utf-8',mode='r')as f1,open('message.txt.bak',encoding='utf-8',mode='w')as f2:
+#         for line in f1:
+#             if line[0] != order.strip():
+#                 f2.write(line)
+#     os.remove('message.txt')
+#     os.rename('message.txt.bak','message.txt')
+#     return
