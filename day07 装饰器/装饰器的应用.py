@@ -72,17 +72,10 @@ def auth(f):
 				ret = f(*args,**kwargs)
 				return ret
 			else:
-				print('opration error,please flash the page.')
-			# username=input('username:')
-			# password = input('password:')
-			# if username=='fallen' and password == '123456':
-			# 	print('登录成功')
-			# 	status_dict['username']=username
-			# 	status_dict['status']=True
-			# 	ret = f(*args,**kwargs)
-			# 	return ret
-			# else:
-			# 	print('登录失败')
+				print('操作错误！退出系统。')
+                time.sleep(0.5)
+                break
+			
 	return inner 
 
 @auth
