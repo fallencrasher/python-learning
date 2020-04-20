@@ -47,13 +47,13 @@ def register():
         username = input('请输入用户名(只能含有字母或者数字，不能含有特殊字符)：')
         password = input('请输入密码(长度要在 6~14 个字符之间)：')
         if username.strip().isalnum():
-            with open('user_name.txt', encoding='utf-8', mode='r') as f1, open('user_name.txt', encoding='utf-8',
-                                                                               mode='a') as f2:
+            with open('blog/db/user_name.txt', encoding='utf-8', mode='r') as f1, open('blog/db/user_name.txt', encoding='utf-8',
+                                                                                       mode='a') as f2:
                 lst1 = []
                 for line in f1:
                     lst1.append(line.strip())
                 if username.strip() not in lst1 and (len(password.strip()) >= 6 and len(password.strip()) <= 14):
-                    with open('user_msg.txt', encoding='utf-8', mode='a') as f3:
+                    with open('blog/db/user_msg.txt', encoding='utf-8', mode='a') as f3:
                         md5 = hashlib.md5()
                         md5.update(username.encode('utf-8'))
                         md5.update(password.encode('utf-8'))
@@ -85,7 +85,7 @@ def login():
     while count < 4:
         username = input('请输入用户名：')
         password = input('请输入密码：')
-        with open('user_name.txt', encoding='utf-8', mode='r') as f1:
+        with open('blog/db/user_name.txt', encoding='utf-8', mode='r') as f1:
             # lst1 = []
             # for line in f1:
             #     lst1.append(line.strip())
@@ -94,7 +94,7 @@ def login():
             md5.update(username.encode('utf-8'))
             md5.update(password.encode('utf-8'))
             ret = md5.hexdigest()
-            with open('user_msg.txt', encoding='utf-8', mode='r') as f2:
+            with open('blog/db/user_msg.txt', encoding='utf-8', mode='r') as f2:
                 # lst2 = []
                 # for line in f2:
                 #     lst2.append(line.strip())

@@ -1,9 +1,11 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# @Date    : 2020-04-16 19:56:39
-# @Author  : Fallen (xdd043@qq.com)
-# @Link    : https://github.com/fallencrasher/python-learning
-# @Version : $Id$
+#!/usr/bin/env bash
+# -*- coding = utf-8 -*-
+# @common.author: Fallen
+# @Site : https://github.com/fallencrasher/python-learning
+# @Time : 2020/4/17 0017 19:48
+# @File : src.py
+# @Software : PyCharm
+
 
 '''
 博客系统
@@ -13,26 +15,16 @@ import hashlib
 import time
 import collections
 import shutil
+from conf import settings
+from lib import common
+BATH_PATH = os.path.dirname(os.path.dirname(__file__))
+status_dic = {
+    'username': None,
+    'status': False
+}
 
 
 
-
-def auth(f):
-    global status_dic
-
-    def inner(*args, **kwargs):
-        if status_dic['status']:
-            ret = f(*args, **kwargs)
-            return ret
-        else:
-            print('要使用此功能请先登录！')
-            time.sleep(1)
-            if login():
-                ret = f(*args, **kwargs)
-                return ret
-            else:
-                print("登陆失败！")
-    return inner
 
 
 def register():
@@ -47,13 +39,13 @@ def register():
         username = input('请输入用户名(只能含有字母或者数字，不能含有特殊字符)：')
         password = input('请输入密码(长度要在 6~14 个字符之间)：')
         if username.strip().isalnum():
-            with open('user_name.txt', encoding='utf-8', mode='r') as f1, open('user_name.txt', encoding='utf-8',
-                                                                               mode='a') as f2:
+            with open(settings.USER_NAME, encoding='utf-8', mode='r') as f1, open(settings.USER_NAME, encoding='utf-8',
+                                                                                  mode='a') as f2:
                 lst1 = []
                 for line in f1:
                     lst1.append(line.strip())
                 if username.strip() not in lst1 and (len(password.strip()) >= 6 and len(password.strip()) <= 14):
-                    with open('user_msg.txt', encoding='utf-8', mode='a') as f3:
+                    with open(settings.USER_MSG, encoding='utf-8', mode='a') as f3:
                         md5 = hashlib.md5()
                         md5.update(username.encode('utf-8'))
                         md5.update(password.encode('utf-8'))
@@ -85,7 +77,7 @@ def login():
     while count < 4:
         username = input('请输入用户名：')
         password = input('请输入密码：')
-        with open('user_name.txt', encoding='utf-8', mode='r') as f1:
+        with open(settings.USER_NAME, encoding='utf-8', mode='r') as f1:
             # lst1 = []
             # for line in f1:
             #     lst1.append(line.strip())
@@ -94,7 +86,7 @@ def login():
             md5.update(username.encode('utf-8'))
             md5.update(password.encode('utf-8'))
             ret = md5.hexdigest()
-            with open('user_msg.txt', encoding='utf-8', mode='r') as f2:
+            with open(settings.USER_MSG, encoding='utf-8', mode='r') as f2:
                 # lst2 = []
                 # for line in f2:
                 #     lst2.append(line.strip())
@@ -117,7 +109,7 @@ def login():
         #     time.sleep(0.6)
 
 
-@auth
+@common.auth
 def log_out():
     count = 0
     while count < 4:
@@ -152,7 +144,7 @@ def copyFiles(sourceDir, username, file):
         return False
 
 
-@auth
+@common.auth
 def article():
     '''
     a.提示欢迎 xxx 进入文章页面
@@ -175,7 +167,7 @@ def article():
                     content_lst = content.split('|', 1)
                     file_name = content_lst[0]
                     file_content = content_lst[1]
-                    targetDir = os.path.join(os.path.abspath(os.curdir), status_dic['username'])
+                    targetDir = os.path.join(BATH_PATH, 'user', status_dic['username'])
                     print(targetDir)
                     if not os.path.exists(targetDir):
                         os.makedirs(targetDir)
@@ -198,7 +190,7 @@ def article():
                 if judge_if_file == True:
                     sourceDir = os.path.split(file_dir)[0]
                     file_name = os.path.split(file_dir)[-1]
-                    targetDir = os.path.join(os.path.abspath(os.curdir), status_dic['username'])
+                    targetDir = os.path.join(BATH_PATH, 'user', status_dic['username'])
                     print(targetDir)
                     if not os.path.exists(targetDir):
                         os.makedirs(targetDir)
@@ -220,22 +212,23 @@ def article():
                     count += 1
 
 
-@auth
+@common.auth
 def dariy():
     print(f"欢迎{status_dic['username']}来到日记页面,再见！")
     time.sleep(1)
 
 
-@auth
+@common.auth
 def collection():
     print(f"欢迎{status_dic['username']}来到收藏界面,再见！")
     time.sleep(1)
 
 
-@auth
+@common.auth
 def comment():
     print(f"欢迎{status_dic['username']}来到评论界面,再见！")
     time.sleep(1)
+
 
 # def _quit():
 #     print('博客园系统将退出。')
@@ -243,15 +236,17 @@ def comment():
 
 
 dic_functions = {
-    1:login,
-    2:register,
-    3:article,
-    4:comment,
-    5:dariy,
-    6:collection,
-    7:log_out,
+    1: login,
+    2: register,
+    3: article,
+    4: comment,
+    5: dariy,
+    6: collection,
+    7: log_out,
 }
-def main():
+
+
+def run():
     while True:
         print('欢迎来到博客园！')
         judge = input(
@@ -269,7 +264,7 @@ def main():
         )
         if judge.isdigit() and int(judge) in (1, 2, 3, 4, 5, 6, 7):
             dic_functions[int(judge)]()
-        elif judge.isdigit() and int(judge)==8:
+        elif judge.isdigit() and int(judge) == 8:
             print('博客园系统将退出。')
             time.sleep(0.5)
             break
@@ -297,10 +292,6 @@ def main():
         else:
             print("输入错误！只能输入序号！系统将回到初始界面")
 
+# if __name__ == '__main__':
 
-if __name__ == '__main__':
-    status_dic = {
-        'username': None,
-        'status': False
-    }
-    main()
+# main()
