@@ -14,12 +14,12 @@
 # 面向对象开发 : 有哪些角色 角色的属性和技能 两个角色之间是如何交互的
 
 # 复杂的 拥有开放式结局的程序 比较适合使用面向对象开发
-    # 游戏
-    # 购物
+	# 游戏
+	# 购物
 
 # 类和对象之间的关系?
-    # 类 是一个大范围 是一个模子 它约束了事物有哪些属性 但是不能约束具体的值
-    # 对象 是一个具体的内容 是模子的产物 它遵循了类的约束 同时给属性赋上具体的值
+	# 类 是一个大范围 是一个模子 它约束了事物有哪些属性 但是不能约束具体的值
+	# 对象 是一个具体的内容 是模子的产物 它遵循了类的约束 同时给属性赋上具体的值
 
 
 # class Person:
@@ -83,63 +83,7 @@
 
 
 
-# # 定义一个用户类,用户名和密码是这个类的属性,实例化两个用户,分别有不同的用户名和密码
-# 	# 设计一个方法 修改密码
-# 	# 你得先登录才能修改密码
 
-# import time
-
-# dic = {'uid':'fallen','passwd':'123456'}
-
-# def auth(f):
-# 	def inner(*args,**kwargs):
-# 		if login():
-# 			ret = f(*args,**kwargs)
-# 			return ret
-# 	return inner
-
-# def login():
-# 	username = input("username:").strip()
-# 	password = input("password:").strip()
-# 	if username==dic['uid'] and password==dic['passwd']:
-# 		print('登陆成功')
-# 		return True
-# 	else:
-# 		print('登录失败')
-# 		return False
-
-
-# class user(object):
-# 	"""docstring for user"""
-# 	def __init__(self, username,password):
-# 		super(user, self).__init__()
-# 		self.username = username
-# 		self.password = password
-# 	@auth
-# 	def fix_pass(self):
-# 		count = 0
-# 		while True:
-# 			judge = input('要改密码吗？(yes/no):').strip()
-# 			if judge.lower()=='yes': 
-# 				self.password = input('new password:').strip()
-# 				dic['password'] = self.password
-# 				return True
-# 			elif judge.lower()=='no':
-# 				return False
-# 				break
-# 			else:
-# 				print('请输入 yes 或 no.')
-
-
-
-		
-
-		
-# xiaoming = user('xiaoming','123456')
-# dacheng = user('dacheng','654321')
-
-# print(xiaoming.__dict__,dacheng.__dict__)
-# xiaoming.fix_pass()
 
 # 算法
 # 二分查找  [1,2,3,4,5,6,7,8,9,10,27,36,46,58,69] - 有序列表
@@ -188,26 +132,26 @@ print('index',search(58,lst1,0,len(lst1)-1))
 # 返回 x 在 arr 中的索引，如果不存在返回 -1
 def binarySearch (arr, l, r, x): 
   
-    # 基本判断
-    if r >= l: 
+	# 基本判断
+	if r >= l: 
   
-        mid = int(l + (r - l)/2)
+		mid = int(l + (r - l)/2)
   
-        # 元素整好的中间位置
-        if arr[mid] == x: 
-            return mid 
-          
-        # 元素小于中间位置的元素，只需要再比较左边的元素
-        elif arr[mid] > x: 
-            return binarySearch(arr, l, mid-1, x) 
+		# 元素整好的中间位置
+		if arr[mid] == x: 
+			return mid 
+		  
+		# 元素小于中间位置的元素，只需要再比较左边的元素
+		elif arr[mid] > x: 
+			return binarySearch(arr, l, mid-1, x) 
   
-        # 元素大于中间位置的元素，只需要再比较右边的元素
-        else: 
-            return binarySearch(arr, mid+1, r, x) 
+		# 元素大于中间位置的元素，只需要再比较右边的元素
+		else: 
+			return binarySearch(arr, mid+1, r, x) 
   
-    else: 
-        # 不存在
-        return -1
+	else: 
+		# 不存在
+		return -1
   
 # 测试数组
 arr = [ 2, 3, 4, 10, 40 ] 
@@ -217,6 +161,6 @@ print('index',search(10,arr,0,len(lst1)-1))
 result = binarySearch(arr, 0, len(arr)-1, x) 
   
 if result != -1: 
-    print ("元素在数组中的索引为 %d" % result )
+	print ("元素在数组中的索引为 %d" % result )
 else: 
-    print ("元素不在数组中")
+	print ("元素不在数组中")

@@ -13,9 +13,10 @@
     # 类 是一个大范围 是一个模子 它约束了事物有哪些属性 但是不能约束具体的值
     # 对象 是一个具体的内容 是模子的产物 它遵循了类的约束 同时给属性赋上具体的值
 
-
+# 定义一个 ‘人’ 类
 # class Person:
 # 	"""人"""
+#   #__init__ 函数创建了人的一些个属性，名字啥的，这个叫动态属性变量
 # 	def __init__(self, name,sex,job,hp,weapon,ad):
 # 		super(Person, self).__init__()
 # 		self.name = name
@@ -24,11 +25,12 @@
 # 		self.hp = hp
 # 		self.weapon = weapon
 # 		self.ad = ad
-		
+		#人可以执行很多功能，比如打狗，
 # 	def cuo(self,dog):
 # 		dog.hp -= self.ad
 # 		print(f'{self.name}给{dog.name}搓了澡，{dog.name}掉了{self.ad}点血，{dog.name}的当前血量为{dog.hp}')
 
+# 定义一个 狗 类
 # class Dog:
 # 	def __init__(self, name,hp,ad,style):
 # 		super(Dog, self).__init__()
@@ -79,59 +81,65 @@
 # 	# 设计一个方法 修改密码
 # 	# 你得先登录才能修改密码
 
-# import time
+import time
+import os
 
-# dic = {'uid':'fallen','passwd':'123456'}
+def auth(f):
+	def inner(*args,**kwargs):
+		if login():
+			ret = f(*args,**kwargs)
+			return ret
+	return inner
 
-# def auth(f):
-# 	def inner(*args,**kwargs):
-# 		if login():
-# 			ret = f(*args,**kwargs)
-# 			return ret
-# 	return inner
+def login():
+	username = input("username:").strip()
+	password = input("password:").strip()
+	with open('userinfo',encoding='utf-8') as f1:
+		for i in f1:
+			uid,pwd = i.strip().split('|')
+			if username==uid and password==pwd:
+				print('login successfully')
+				return True
+		else:
+			print('login failed')
+			return False
 
-# def login():
-# 	username = input("username:").strip()
-# 	password = input("password:").strip()
-# 	if username==dic['uid'] and password==dic['passwd']:
-# 		print('登陆成功')
-# 		return True
-# 	else:
-# 		print('登录失败')
-# 		return False
+	   
 
+class User(object):
+	"""docstring for user"""
+	def __init__(self, username,password):
+		super(User, self).__init__()
+		self.username = username
+		self.password = password
 
-# class user(object):
-# 	"""docstring for user"""
-# 	def __init__(self, username,password):
-# 		super(user, self).__init__()
-# 		self.username = username
-# 		self.password = password
-# 	@auth
-# 	def fix_pass(self):
-# 		count = 0
-# 		while True:
-# 			judge = input('要改密码吗？(yes/no):').strip()
-# 			if judge.lower()=='yes': 
-# 				self.password = input('new password:').strip()
-# 				dic['password'] = self.password
-# 				return True
-# 			elif judge.lower()=='no':
-# 				return False
-# 				break
-# 			else:
-# 				print('请输入 yes 或 no.')
-
-
+	@auth
+	def fix_pass(self):
+		oldpwd = input('please input your old password:') 
+		if oldpwd == self.password:
+			newpwd = input('please input your new password:')
+			with open('userinfo',encoding='utf-8',mode='r') as f2,open('userinfo.bak',encoding='utf-8',mode='w') as f3:
+				for line in f2:
+					uid,pwd = line.strip().split('|')
+					if uid == self.username:
+						self.password = newpwd.strip()
+						pwd = newpwd.strip()
+						f3.write("{}|{}\n".format(uid,pwd))
+					else:
+						f3.write('{}\n'.format(line))
+			os.remove('userinfo')
+			os.rename('userinfo.bak','userinfo')
+			return True
+		else:
+			return False
 
 		
 
 		
-# xiaoming = user('xiaoming','123456')
-# dacheng = user('dacheng','654321')
+fallen = User('fallen','123456')
 
-# print(xiaoming.__dict__,dacheng.__dict__)
-# xiaoming.fix_pass()
+#print(fallen.__dict__)
+fallen.fix_pass()
 
 # 算法
 # 二分查找  [1,2,3,4,5,6,7,8,9,10,27,36,46,58,69] - 有序列表
@@ -199,5 +207,24 @@ if result != -1:
     print ("元素在数组中的索引为 %d" % result )
 else: 
     print ("元素不在数组中")
+```
+
+类的其他属性
+
+```python
+一：我们定义的类的属性到底存到哪里了？有两种方式查看
+dir(类名)：查出的是一个名字列表
+类名.__dict__:查出的是一个字典，key为属性名，value为属性值
+
+二：特殊的类属性
+类名.__name__# 类的名字(字符串)
+类名.__doc__# 类的文档字符串
+类名.__base__# 类的第一个父类(在讲继承时会讲)
+类名.__bases__# 类所有父类构成的元组(在讲继承时会讲)
+类名.__dict__# 类的字典属性
+类名.__module__# 类定义所在的模块
+类名.__class__# 实例对应的类(仅新式类中)
+
+
 ```
 

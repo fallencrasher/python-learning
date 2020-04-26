@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+# @Author: Fallen
+# @Date:   2020-04-21 19:35:30
+# @Last Modified by:   Fallen
+# @Last Modified time: 2020-04-21 19:43:43
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Date    : 2020-04-15 22:43:13
@@ -25,6 +30,15 @@ import os
 # 目录相关
 ##删除目录，必须是空目录
 #os.removedirs(r'路径')
+
+# 自动遍历 一个目录下的所有目录和文件
+# 返回一个生成器，每次生成一个列表，列表里的元素是一些元组，这些元组，每一个都包含三个元素
+# 分别为 路径名  路径下的所有子路径  路径下的文件
+g = os.walk('D:\programming_with_python\043从零开始学python')
+for i in g:
+	path,dir_lst,file_lst = i
+	print(path,file_lst)
+
 
 ## 使用 shutil 模块可以删除含有内容的目录
 # import shutil
