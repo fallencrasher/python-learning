@@ -5,7 +5,7 @@
 # @Link    : https://github.com/fallencrasher/python-learning
 # @Version : $Id$
 
-#a.txt 作业
+#d.txt 作业
 #将文件内容构建成[{'name':'apple','price':10,'amount':3},{'name':'tesla','price':1000000,'amount':1}......]的样子，并计算出总价钱
 
 l = []

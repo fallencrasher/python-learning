@@ -108,9 +108,9 @@ def register():
 	'''
 	count = 0
 	while count < 4:
-		username = input('请输入用户名(管理员请输入 admin)：')
+		username = input('请输入用户名(不是学号)(管理员请输入 admin)：')
 		password = input('请输入密码(长度要在 6~14 个字符之间)：')
-		if username.strip():
+		if not username.strip().isdigit():
 			with open('user_msg.txt', encoding='utf-8', mode='r') as f1, open('user_msg.txt', encoding='utf-8',
 																			   mode='a') as f2:
 				lst1 = []

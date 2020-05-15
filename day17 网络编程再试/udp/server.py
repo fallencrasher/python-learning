@@ -7,6 +7,5 @@ while True:
 	msg,addr = sk.recvfrom(1024)
 	print(msg.decode('utf-8'))
 	#if msg.upper()=='Q':break
-	send_msg = input('>>>')
-	sk.sendto(send_msg.encode('utf-8'),addr)
+	sk.sendto(msg.encode('utf-8'),addr)
 	#if send_msg.upper()=='Q':break

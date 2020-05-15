@@ -8,13 +8,13 @@ while True:
 	conn,addr = sk.accept()
 	print('conn:',conn)
 	while True:
-		send_msg = input('>>>')
-		conn.send(send_msg.encode('utf-8'))
-		if send_msg.upper()=='Q':
-			break
 		msg = conn.recv(1024).decode('utf-8')
 		print(msg)
 		if msg.upper()=='Q':
+			break
+		send_msg = input('>>>')
+		conn.send(send_msg.encode('utf-8'))
+		if send_msg.upper()=='Q':
 			break
 	conn.close()
 
